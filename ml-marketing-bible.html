@@ -610,13 +610,14 @@
         /* Neural Network Visualization Styles */
         .neural-network-container {
             position: relative;
-            height: 600px;
+            height: 700px;
             background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, rgba(16, 16, 16, 0.9) 70%);
             border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 20px;
             margin: 40px 0;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            padding: 20px;
         }
 
         .neural-network-svg {
@@ -774,9 +775,35 @@
             animation: float 4s ease-in-out infinite reverse;
         }
 
+        .center-node {
+            background: linear-gradient(135deg, #10b981, #3b82f6) !important;
+            box-shadow: 0 12px 48px rgba(16, 185, 129, 0.6) !important;
+            border: 3px solid rgba(255, 255, 255, 0.2) !important;
+            width: 140px !important;
+            height: 140px !important;
+            z-index: 5 !important;
+        }
+
+        .center-node::before {
+            width: 160px !important;
+            height: 160px !important;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(59, 130, 246, 0.4)) !important;
+        }
+
+        .center-node:hover {
+            transform: scale(1.2) !important;
+            box-shadow: 0 16px 64px rgba(16, 185, 129, 0.8) !important;
+        }
+
+        .center-node .neural-node-number {
+            font-size: 1.8em !important;
+            color: #fbbf24 !important;
+        }
+
         @media (max-width: 768px) {
             .neural-network-container {
-                height: 500px;
+                height: 600px;
+                padding: 15px;
             }
             
             .neural-node {
@@ -789,6 +816,16 @@
                 height: 100px;
             }
             
+            .center-node {
+                width: 100px !important;
+                height: 100px !important;
+            }
+            
+            .center-node::before {
+                width: 120px !important;
+                height: 120px !important;
+            }
+            
             .neural-node-content {
                 font-size: 0.6em;
                 padding: 4px;
@@ -798,6 +835,11 @@
                 bottom: 10px;
                 right: 10px;
                 padding: 10px;
+                font-size: 0.8em;
+            }
+            
+            .network-title {
+                font-size: 1.2em;
             }
             .container { padding: 15px; }
             .header h1 { font-size: 2.5em; }
@@ -816,7 +858,7 @@
 
         <!-- Neural Network Visualization -->
         <div class="neural-network-container" id="neural-network">
-            <div class="network-title">ML Marketing Intelligence Network</div>
+            <div class="network-title">Marketing Data Science</div>
             
             <!-- SVG for connections -->
             <svg class="neural-network-svg" id="network-svg">
@@ -824,56 +866,69 @@
             </svg>
             
             <!-- Neural Nodes -->
-            <div class="neural-node active" id="node-1" style="top: 20%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(1, 'personalization')">
+            <!-- Center Core Node -->
+            <div class="neural-node center-node" id="node-center" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode('center', 'overview')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">⚡</div>
+                    <div>Core Engine</div>
+                </div>
+            </div>
+            
+            <!-- Layer 1: Top -->
+            <div class="neural-node active" id="node-1" style="top: 25%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(1, 'personalization')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">1</div>
                     <div>Personalization</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-2" style="top: 35%; left: 20%; transform: translate(-50%, -50%);" onclick="activateNode(2, 'attribution')">
+            <!-- Layer 2: Middle Ring -->
+            <div class="neural-node" id="node-2" style="top: 35%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(2, 'attribution')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">2</div>
                     <div>Attribution</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-3" style="top: 35%; left: 80%; transform: translate(-50%, -50%);" onclick="activateNode(3, 'experiments')">
+            <div class="neural-node" id="node-3" style="top: 35%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(3, 'experiments')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">3</div>
                     <div>Experiments</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-4" style="top: 55%; left: 15%; transform: translate(-50%, -50%);" onclick="activateNode(4, 'behavioral')">
+            <!-- Layer 3: Outer Ring -->
+            <div class="neural-node" id="node-4" style="top: 50%; left: 15%; transform: translate(-50%, -50%);" onclick="activateNode(4, 'behavioral')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">4</div>
                     <div>Behavioral</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-5" style="top: 55%; left: 85%; transform: translate(-50%, -50%);" onclick="activateNode(5, 'segmentation')">
+            <div class="neural-node" id="node-5" style="top: 50%; left: 85%; transform: translate(-50%, -50%);" onclick="activateNode(5, 'segmentation')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">5</div>
                     <div>Segmentation</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-6" style="top: 75%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(6, 'data-science')">
+            <!-- Layer 4: Lower Ring -->
+            <div class="neural-node" id="node-6" style="top: 65%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(6, 'data-science')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">6</div>
                     <div>Data Science</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-7" style="top: 75%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(7, 'crm')">
+            <div class="neural-node" id="node-7" style="top: 65%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(7, 'crm')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">7</div>
                     <div>CRM</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-8" style="top: 90%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(8, 'measurement')">
+            <!-- Layer 5: Bottom -->
+            <div class="neural-node" id="node-8" style="top: 75%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(8, 'measurement')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">8</div>
                     <div>Performance</div>
@@ -885,6 +940,10 @@
                 <div class="legend-item">
                     <div class="legend-color" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);"></div>
                     <span>Available Section</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #10b981, #3b82f6);"></div>
+                    <span>Core Engine</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-color" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
@@ -2239,10 +2298,14 @@ channel_comparison = pd.DataFrame({
             
             // Define connection patterns (which nodes connect to which)
             const connections = [
-                [1, 2], [1, 3], [1, 4], [1, 5], // Center node connects to layer 2
-                [2, 4], [2, 6], [3, 5], [3, 7], // Layer 2 to layer 3
-                [4, 6], [4, 8], [5, 7], [5, 8], // Layer 3 to layer 4
-                [6, 8], [7, 8] // Layer 4 to output
+                // Center node connects to all outer nodes
+                ['center', 1], ['center', 2], ['center', 3], ['center', 4], 
+                ['center', 5], ['center', 6], ['center', 7], ['center', 8],
+                // Ring connections
+                [1, 2], [1, 3], // Top to middle ring
+                [2, 4], [2, 6], [3, 5], [3, 7], // Middle to outer ring
+                [4, 6], [5, 7], // Outer ring cross connections
+                [6, 8], [7, 8] // Lower ring to bottom
             ];
             
             connections.forEach(([from, to]) => {
