@@ -800,6 +800,41 @@
             color: #fbbf24 !important;
         }
 
+        /* Overview Section Styles */
+        .overview-section {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .back-to-overview-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .back-to-overview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .back-to-overview-btn.hidden {
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .neural-network-container {
                 height: 600px;
@@ -851,6 +886,11 @@
     </style>
 </head>
 <body>
+    <!-- Back to Overview Button -->
+    <button class="back-to-overview-btn hidden" id="backBtn" onclick="resetToFullView()">
+        ← Back to Overview
+    </button>
+
     <div class="container">
         <div class="header">
             <h1>ML Marketing Bible</h1>
@@ -867,7 +907,7 @@
             
             <!-- Neural Nodes -->
             <!-- Center Core Node -->
-            <div class="neural-node center-node" id="node-center" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode('center', 'overview')">
+            <div class="neural-node center-node" id="node-center" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode('center', 'overview')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">⚡</div>
                     <div>Marketing Data Science</div>
@@ -875,7 +915,7 @@
             </div>
             
             <!-- Layer 1: Top -->
-            <div class="neural-node active" id="node-1" style="top: 25%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(1, 'personalization')">
+            <div class="neural-node active" id="node-1" style="top: 25%; left: 50%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(1, 'personalization')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">1</div>
                     <div>Personalization Model</div>
@@ -883,14 +923,14 @@
             </div>
             
             <!-- Layer 2: Middle Ring -->
-            <div class="neural-node" id="node-2" style="top: 35%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(2, 'attribution')">
+            <div class="neural-node" id="node-2" style="top: 35%; left: 25%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(2, 'attribution')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">2</div>
                     <div>Attribution Model</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-3" style="top: 35%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(3, 'experiments')">
+            <div class="neural-node" id="node-3" style="top: 35%; left: 75%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(3, 'experiments')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">3</div>
                     <div>Experiment Design</div>
@@ -898,14 +938,14 @@
             </div>
             
             <!-- Layer 3: Outer Ring -->
-            <div class="neural-node" id="node-4" style="top: 50%; left: 15%; transform: translate(-50%, -50%);" onclick="activateNode(4, 'behavioral')">
+            <div class="neural-node" id="node-4" style="top: 50%; left: 15%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(4, 'behavioral')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">4</div>
                     <div>Behavioral Predictive Model</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-5" style="top: 50%; left: 85%; transform: translate(-50%, -50%);" onclick="activateNode(5, 'segmentation')">
+            <div class="neural-node" id="node-5" style="top: 50%; left: 85%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(5, 'segmentation')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">5</div>
                     <div>Customer Segmentation</div>
@@ -913,14 +953,14 @@
             </div>
             
             <!-- Layer 4: Lower Ring -->
-            <div class="neural-node" id="node-6" style="top: 65%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(6, 'data-science')">
+            <div class="neural-node" id="node-6" style="top: 65%; left: 25%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(6, 'data-science')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">6</div>
                     <div>Marketing Data Science</div>
                 </div>
             </div>
             
-            <div class="neural-node" id="node-7" style="top: 65%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(7, 'crm')">
+            <div class="neural-node" id="node-7" style="top: 65%; left: 75%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(7, 'crm')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">7</div>
                     <div>Customer Relationship Management</div>
@@ -928,7 +968,7 @@
             </div>
             
             <!-- Layer 5: Bottom -->
-            <div class="neural-node" id="node-8" style="top: 75%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(8, 'measurement')">
+            <div class="neural-node" id="node-8" style="top: 75%; left: 50%; transform: translate(-50%, -50%);" onclick="stopAutoDemo(); activateNode(8, 'measurement')">
                 <div class="neural-node-content">
                     <div class="neural-node-number">8</div>
                     <div>Performance Measurement</div>
@@ -2401,10 +2441,146 @@ channel_comparison = pd.DataFrame({
             
             currentActiveNode = nodeNumber;
             
-            // Show corresponding section
-            if (sectionId) {
-                showSection(sectionId);
+            // Hide all content sections and navigation
+            hideAllContentSections();
+            
+            // Show only the relevant section
+            if (sectionId && sectionId !== 'overview') {
+                showOnlySelectedSection(sectionId);
+            } else if (nodeNumber === 'center') {
+                showOverviewContent();
             }
+        }
+        
+        function hideAllContentSections() {
+            // Hide navigation cards
+            const navigation = document.querySelector('.navigation');
+            if (navigation) {
+                navigation.style.display = 'none';
+            }
+            
+            // Hide all deep dive sections
+            document.querySelectorAll('.deep-dive-section').forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+            
+            // Hide any other content sections that might exist
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show back button
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.classList.remove('hidden');
+            }
+        }
+        
+        function showOnlySelectedSection(sectionId) {
+            // Show only the selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+                
+                // Scroll to the section smoothly
+                setTimeout(() => {
+                    targetSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 100);
+            }
+        }
+        
+        function showOverviewContent() {
+            // Show overview content when center node is clicked
+            const navigation = document.querySelector('.navigation');
+            if (navigation) {
+                navigation.style.display = 'grid';
+            }
+            
+            // Show a brief overview or instructions
+            showOverviewMessage();
+            
+            // Hide back button for overview
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.classList.add('hidden');
+            }
+        }
+        
+        function showOverviewMessage() {
+            // Create or show an overview message
+            let overviewSection = document.getElementById('overview-section');
+            if (!overviewSection) {
+                overviewSection = document.createElement('div');
+                overviewSection.id = 'overview-section';
+                overviewSection.className = 'deep-dive-section overview-section';
+                overviewSection.innerHTML = `
+                    <div class="section-header">
+                        <h2 class="section-title">Marketing Data Science Overview</h2>
+                        <p class="section-subtitle">Central hub connecting all ML marketing disciplines</p>
+                    </div>
+                    <div class="algorithm-explanation">
+                        <h4>Integrated Marketing Intelligence Framework</h4>
+                        <p>Marketing Data Science represents the central nervous system of modern marketing operations, 
+                        connecting and orchestrating eight critical disciplines to create a unified intelligence framework.</p>
+                        
+                        <p><strong>How the Components Connect:</strong></p>
+                        <ul>
+                            <li><strong>Data flows</strong> from all touchpoints into the central processing engine</li>
+                            <li><strong>Machine learning models</strong> analyze patterns across customer journeys</li>
+                            <li><strong>Insights propagate</strong> to specialized modules for targeted optimization</li>
+                            <li><strong>Results feedback</strong> continuously improve the entire system</li>
+                        </ul>
+                        
+                        <p>Click on any neural network node above to explore specific deep dive sections, 
+                        or use the navigation cards below to browse all available topics.</p>
+                    </div>
+                `;
+                
+                // Insert after neural network
+                const neuralNetwork = document.getElementById('neural-network');
+                neuralNetwork.parentNode.insertBefore(overviewSection, neuralNetwork.nextSibling);
+            }
+            
+            overviewSection.style.display = 'block';
+            overviewSection.classList.add('active');
+        }
+        
+        function resetToFullView() {
+            // Function to show all content again
+            const navigation = document.querySelector('.navigation');
+            if (navigation) {
+                navigation.style.display = 'grid';
+            }
+            
+            document.querySelectorAll('.deep-dive-section').forEach(section => {
+                section.style.display = 'block';
+            });
+            
+            // Hide overview section
+            const overviewSection = document.getElementById('overview-section');
+            if (overviewSection) {
+                overviewSection.style.display = 'none';
+            }
+            
+            // Hide back button
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.classList.add('hidden');
+            }
+            
+            // Reset neural network to default state
+            document.querySelectorAll('.neural-node').forEach(node => {
+                node.classList.remove('active');
+            });
+            document.getElementById('node-1').classList.add('active');
+            
+            // Scroll back to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
         function animateConnections() {
@@ -2417,13 +2593,29 @@ channel_comparison = pd.DataFrame({
         }
         
         // Auto-cycle through nodes for demo effect
+        let autoDemoInterval = null;
+        let isUserInteracting = false;
+        
         function startNeuralNetworkDemo() {
-            let nodeIndex = 1;
-            setInterval(() => {
-                nodeIndex = (nodeIndex % 8) + 1;
-                const sections = ['personalization', 'attribution', 'experiments', 'behavioral', 'segmentation', 'data-science', 'crm', 'measurement'];
-                activateNode(nodeIndex, sections[nodeIndex - 1]);
-            }, 8000); // Change every 8 seconds
+            // Only start auto demo if user hasn't interacted
+            if (!isUserInteracting) {
+                let nodeIndex = 1;
+                autoDemoInterval = setInterval(() => {
+                    if (!isUserInteracting) {
+                        nodeIndex = (nodeIndex % 8) + 1;
+                        const sections = ['personalization', 'attribution', 'experiments', 'behavioral', 'segmentation', 'data-science', 'crm', 'measurement'];
+                        activateNode(nodeIndex, sections[nodeIndex - 1]);
+                    }
+                }, 8000); // Change every 8 seconds
+            }
+        }
+        
+        function stopAutoDemo() {
+            isUserInteracting = true;
+            if (autoDemoInterval) {
+                clearInterval(autoDemoInterval);
+                autoDemoInterval = null;
+            }
         }
 
         // Toggle between business usage and technical implementation
