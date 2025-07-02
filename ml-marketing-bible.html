@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Marketing Bible - Advanced Data Science Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Code+Pro:wght@300,400,500&family=JetBrains+Mono:wght@300,400,500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1a1b2e 0%, #16213e 50%, #0f1419 100%);
+            min-height: 100vh;
+            color: #e8eaed;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: #f1f5f9;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+
+        .header h1 {
+            font-size: 3.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 500;
+            color: #f8fafc;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.03em;
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.85;
+            margin-bottom: 20px;
+            color: #cbd5e1;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .navigation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .nav-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            color: #f1f5f9;
+            padding: 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-card:hover::before {
+            left: 100%;
+        }
+
+        .nav-card:hover, .nav-card.active {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: #e2e8f0;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .nav-card p {
+            font-size: 0.9em;
+            opacity: 0.8;
+            color: #cbd5e1;
+        }
+
+        .deep-dive-section {
+            display: none;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .deep-dive-section.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .section-title {
+            color: #f8fafc;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+            letter-spacing: 0.02em;
+        }
+
+        .section-subtitle {
+            color: #cbd5e1;
+            font-size: 1.1em;
+            opacity: 0.85;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .ml-concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .ml-concept-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .ml-concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+
+        .ml-concept-card h4 {
+            color: #e2e8f0;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .ml-concept-card p {
+            color: #cbd5e1;
+            margin-bottom: 15px;
+        }
+
+        .code-section {
+            background: #0f172a;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .code-title {
+            color: #3b82f6;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .code-lang {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+
+        .code-block {
+            background: #0a0b0f;
+            color: #e5e7eb;
+            padding: 30px;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', 'Source Code Pro', monospace;
+            font-size: 0.92em;
+            overflow-x: auto;
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            position: relative;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+        }
+
+        .code-result {
+            background: #1a1d23;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9em;
+            color: #22c55e;
+            line-height: 1.6;
+        }
+
+        .code-result::before {
+            content: '→ Output:';
+            display: block;
+            color: #10b981;
+            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .code-step {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 3px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .code-step h5 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .interactive-demo {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .demo-input, .demo-select {
+            padding: 12px 16px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.8);
+            color: #f1f5f9;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .demo-input:focus, .demo-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .demo-button {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .results-display {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .algorithm-explanation {
+            background: rgba(6, 182, 212, 0.1);
+            border-left: 4px solid #06b6d4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .algorithm-explanation h4 {
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 500;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .data-example {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .data-example h4 {
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 500;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .use-case-card {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .use-case-card:hover {
+            border-color: #6366f1;
+            transform: translateY(-3px);
+        }
+
+        .use-case-card h5 {
+            color: #e2e8f0;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .metric-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: scale(1.05);
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #3b82f6;
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #94a3b8;
+        }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding: 20px 0;
+        }
+
+        .nav-arrow {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-arrow:disabled {
+            background: #374151;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Syntax highlighting */
+        .keyword { color: #c792ea; }
+        .string { color: #c3e88d; }
+        .comment { color: #546e7a; }
+        .number { color: #f78c6c; }
+        .function { color: #82aaff; }
+        .variable { color: #eeffff; }
+
+        /* Toggle Switch Styles */
+        .content-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            gap: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .toggle-label {
+            font-weight: 500;
+            color: #e8eaed;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-label.active {
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        /* Content visibility */
+        .business-content,
+        .technical-content {
+            transition: opacity 0.3s ease;
+        }
+
+        .business-content.hidden,
+        .technical-content.hidden {
+            display: none;
+        }
+
+        /* Business usage cards */
+        .business-usage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .business-usage-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .business-usage-card:hover {
+            background: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
+        .business-usage-card h5 {
+            color: #3b82f6;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .business-usage-card .industry {
+            color: #8b5cf6;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .business-usage-card .description {
+            color: #e8eaed;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        .business-usage-card .roi-metrics {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .business-usage-card .roi-metrics strong {
+            color: #8b5cf6;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 2.5em; }
+            .navigation { grid-template-columns: 1fr; }
+            .ml-concept-grid { grid-template-columns: 1fr; }
+            .use-case-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ML Marketing Bible</h1>
+            <p class="subtitle">Advanced Machine Learning & Data Science for Marketing</p>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-card active" onclick="showSection('personalization')">
+                <h3>Personalization Model Deep Dive</h3>
+                <p>Advanced algorithms for individualized customer experiences and recommendation systems</p>
+            </div>
+            <div class="nav-card" onclick="showSection('attribution')">
+                <h3>Attribution Model Deep Dive</h3>
+                <p>Multi-touch attribution modeling and conversion tracking with machine learning</p>
+            </div>
+            <div class="nav-card" onclick="showSection('experiments')">
+                <h3>Experiment Design Deep Dive</h3>
+                <p>A/B testing, multivariate testing, and causal inference for marketing optimization</p>
+            </div>
+            <div class="nav-card" onclick="showSection('behavioral')">
+                <h3>Behavioral Predictive Model Deep Dive</h3>
+                <p>Machine learning models for customer behavior forecasting and churn prediction</p>
+            </div>
+            <div class="nav-card" onclick="showSection('segmentation')">
+                <h3>Segmentation Deep Dive</h3>
+                <p>Advanced customer segmentation and clustering techniques with ML algorithms</p>
+            </div>
+            <div class="nav-card" onclick="showSection('data-science')">
+                <h3>Marketing Data Science Deep Dive</h3>
+                <p>Statistical modeling and data-driven marketing strategies with advanced analytics</p>
+            </div>
+            <div class="nav-card" onclick="showSection('crm')">
+                <h3>Customer Relationship Management Deep Dive</h3>
+                <p>Lifecycle management and customer journey optimization using data science</p>
+            </div>
+            <div class="nav-card" onclick="showSection('measurement')">
+                <h3>Performance Measurement Deep Dive</h3>
+                <p>KPIs, metrics, and marketing ROI measurement with advanced analytics</p>
+            </div>
+        </div>
+
+        <!-- Personalization Model Deep Dive -->
+        <div id="personalization" class="deep-dive-section active">
+            <div class="section-header">
+                <h2 class="section-title">Personalization Model Deep Dive</h2>
+                <p class="section-subtitle">Advanced algorithms for individualized customer experiences and recommendation systems</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Personalization Framework Overview</h4>
+                <p><strong>Personalization Models</strong> create individualized experiences by leveraging machine learning to understand customer preferences, behaviors, and contexts. These systems adapt content, recommendations, and interactions in real-time.</p>
+                
+                <p><strong>Core Personalization Approaches:</strong></p>
+                <ul>
+                    <li><strong>Collaborative Filtering:</strong> Recommend based on similar user behavior patterns</li>
+                    <li><strong>Content-Based Filtering:</strong> Match user preferences with item characteristics</li>
+                    <li><strong>Hybrid Models:</strong> Combine multiple approaches for enhanced accuracy</li>
+                    <li><strong>Contextual Bandits:</strong> Optimize recommendations through continuous learning</li>
+                    <li><strong>Deep Learning:</strong> Neural networks for complex pattern recognition</li>
+                </ul>
+            </div>
+
+            <div class="data-example">
+                <h4>Sample Data Structure</h4>
+                <p>User-Item rating matrix where each cell represents a user's rating (1-5) for a product:</p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">
+                    <span class="code-title">Complete Collaborative Filtering Implementation</span>
+                    <span class="code-lang">Python</span>
+                </div>
+            <div class="code-step">
+                <h5>Step 1: Import Required Libraries</h5>
+                <div class="code-block">
+<span class="comment"># Complete Collaborative Filtering System with all utility methods</span>
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> sklearn.metrics.pairwise <span class="keyword">import</span> cosine_similarity
+<span class="keyword">from</span> scipy.stats <span class="keyword">import</span> pearsonr
+<span class="keyword">from</span> typing <span class="keyword">import</span> Dict, List, Tuple
+<span class="keyword">import</span> warnings
+
+warnings.filterwarnings(<span class="string">'ignore'</span>)
+</div>
+                <div class="code-result">
+Successfully imported all required libraries for collaborative filtering:
+- NumPy: Numerical computations
+- Pandas: Data manipulation  
+- Scikit-learn: ML utilities
+- SciPy: Statistical functions
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 2: Initialize Collaborative Filter Class</h5>
+                <div class="code-block">
+<span class="keyword">class</span> <span class="function">CollaborativeFilter</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>, user_item_matrix: pd.DataFrame):
+        <span class="string">"""
+        Initialize Collaborative Filtering with user-item rating matrix
+        
+        Parameters:
+        user_item_matrix: DataFrame with users as rows, items as columns, ratings as values
+        """</span>
+        <span class="keyword">self</span>.user_item_matrix = user_item_matrix.fillna(<span class="number">0</span>)
+        <span class="keyword">self</span>.user_similarity = <span class="keyword">self</span>.calculate_user_similarity()
+        <span class="keyword">self</span>.item_similarity = <span class="keyword">self</span>.calculate_item_similarity()
+</div>
+                <div class="code-result">
+Class initialized with:
+- User-item matrix preprocessed (NaN values filled with 0)
+- User similarity matrix calculated using Pearson correlation
+- Item similarity matrix calculated using cosine similarity
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 3: Implement Similarity Calculation Methods</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">cosine_similarity_manual</span>(<span class="keyword">self</span>, vector_a: np.ndarray, vector_b: np.ndarray) -> <span class="keyword">float</span>:
+        <span class="string">"""Calculate cosine similarity between two vectors"""</span>
+        <span class="comment"># Remove zero entries for sparse similarity</span>
+        mask = (vector_a != <span class="number">0</span>) & (vector_b != <span class="number">0</span>)
+        
+        <span class="keyword">if</span> np.sum(mask) == <span class="number">0</span>:
+            <span class="keyword">return</span> <span class="number">0.0</span>
+            
+        a_filtered = vector_a[mask]
+        b_filtered = vector_b[mask]
+        
+        dot_product = np.dot(a_filtered, b_filtered)
+        norm_a = np.linalg.norm(a_filtered)
+        norm_b = np.linalg.norm(b_filtered)
+        
+        <span class="keyword">if</span> norm_a == <span class="number">0</span> <span class="keyword">or</span> norm_b == <span class="number">0</span>:
+            <span class="keyword">return</span> <span class="number">0.0</span>
+            
+        <span class="keyword">return</span> dot_product / (norm_a * norm_b)
+</div>
+                <div class="code-result">
+Cosine similarity method implemented:
+- Formula: cos(θ) = (A·B) / (||A|| ||B||)
+- Handles sparse vectors by filtering zero entries
+- Returns similarity score between 0 and 1
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 4: Implement Pearson Correlation</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">pearson_correlation</span>(<span class="keyword">self</span>, vector_a: np.ndarray, vector_b: np.ndarray) -> <span class="keyword">float</span>:
+        <span class="string">"""Calculate Pearson correlation coefficient between two vectors"""</span>
+        <span class="comment"># Find common non-zero entries</span>
+        mask = (vector_a != <span class="number">0</span>) & (vector_b != <span class="number">0</span>)
+        
+        <span class="keyword">if</span> np.sum(mask) < <span class="number">2</span>:
+            <span class="keyword">return</span> <span class="number">0.0</span>
+            
+        a_filtered = vector_a[mask]
+        b_filtered = vector_b[mask]
+        
+        <span class="keyword">try</span>:
+            correlation, _ = pearsonr(a_filtered, b_filtered)
+            <span class="keyword">return</span> correlation <span class="keyword">if</span> <span class="keyword">not</span> np.isnan(correlation) <span class="keyword">else</span> <span class="number">0.0</span>
+        <span class="keyword">except</span>:
+            <span class="keyword">return</span> <span class="number">0.0</span>
+</div>
+                <div class="code-result">
+Pearson correlation method implemented:
+- Measures linear correlation between -1 and 1
+- Requires minimum 2 common ratings
+- Robust error handling for edge cases
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 5: Calculate User-User Similarity Matrix</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">calculate_user_similarity</span>(<span class="keyword">self</span>) -> pd.DataFrame:
+        <span class="string">"""Calculate user-user similarity matrix using Pearson correlation"""</span>
+        users = <span class="keyword">self</span>.user_item_matrix.index
+        n_users = len(users)
+        
+        <span class="comment"># Initialize similarity matrix</span>
+        similarity_matrix = np.zeros((n_users, n_users))
+        
+        <span class="keyword">for</span> i <span class="keyword">in</span> range(n_users):
+            <span class="keyword">for</span> j <span class="keyword">in</span> range(n_users):
+                <span class="keyword">if</span> i != j:
+                    user_i_ratings = <span class="keyword">self</span>.user_item_matrix.iloc[i].values
+                    user_j_ratings = <span class="keyword">self</span>.user_item_matrix.iloc[j].values
+                    
+                    similarity_matrix[i, j] = <span class="keyword">self</span>.pearson_correlation(
+                        user_i_ratings, 
+                        user_j_ratings
+                    )
+                <span class="keyword">else</span>:
+                    similarity_matrix[i, j] = <span class="number">1.0</span>
+        
+        <span class="keyword">return</span> pd.DataFrame(
+            similarity_matrix, 
+            index=users, 
+            columns=users
+        )
+</div>
+                <div class="code-result">
+User similarity matrix created:
+- Shape: (n_users, n_users) symmetric matrix
+- Diagonal values = 1.0 (user similarity with themselves)
+- Off-diagonal values = Pearson correlation coefficients
+- Used for finding similar users for recommendations
+</div>
+            </div>
+
+            <!-- Content Toggle -->
+            <div class="content-toggle">
+                <span class="toggle-label active" id="business-label">Business Usage</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="content-toggle" onchange="toggleContent()">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="technical-label">Technical Implementation</span>
+            </div>
+
+            <!-- Business Usage Content -->
+            <div class="business-content" id="business-content">
+                <div class="algorithm-explanation">
+                    <h4>Real-World Business Applications</h4>
+                    <p>Collaborative filtering powers recommendation systems across industries, driving engagement, sales, and customer satisfaction.</p>
+                </div>
+
+                <div class="business-usage-grid">
+                    <div class="business-usage-card">
+                        <h5>E-commerce Recommendations</h5>
+                        <div class="industry">Retail & E-commerce</div>
+                        <div class="description">
+                            Generate personalized product recommendations based on customer purchase history and behavior patterns. Powers "Customers who bought this also bought" features.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 15-30% increase in conversion rates, 25% higher average order value
+                        </div>
+                    </div>
+
+                    <div class="business-usage-card">
+                        <h5>Streaming Content Discovery</h5>
+                        <div class="industry">Media & Entertainment</div>
+                        <div class="description">
+                            Recommend movies, TV shows, and music based on viewing/listening history and preferences of similar users. Critical for user retention.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 80% of Netflix viewing comes from recommendations, reducing churn by 40%
+                        </div>
+                    </div>
+
+                    <div class="business-usage-card">
+                        <h5>News & Content Personalization</h5>
+                        <div class="industry">Media & Publishing</div>
+                        <div class="description">
+                            Customize news feeds and article recommendations based on reading patterns, increasing engagement and time-on-site.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 45% increase in page views, 60% higher user engagement rates
+                        </div>
+                    </div>
+
+                    <div class="business-usage-card">
+                        <h5>Job Matching Platforms</h5>
+                        <div class="industry">Human Resources</div>
+                        <div class="description">
+                            Match job seekers with relevant opportunities and help recruiters find suitable candidates based on skills and experience patterns.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 35% faster hiring times, 50% improvement in candidate-job fit scores
+                        </div>
+                    </div>
+
+                    <div class="business-usage-card">
+                        <h5>Social Media Feed Optimization</h5>
+                        <div class="industry">Social Networks</div>
+                        <div class="description">
+                            Curate personalized feeds by recommending posts, connections, and content based on user interaction patterns and similar user behaviors.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 70% increase in daily active users, 25% longer session durations
+                        </div>
+                    </div>
+
+                    <div class="business-usage-card">
+                        <h5>Financial Product Recommendations</h5>
+                        <div class="industry">Financial Services</div>
+                        <div class="description">
+                            Suggest relevant financial products, investment opportunities, and services based on customer profiles and similar customer behaviors.
+                        </div>
+                        <div class="roi-metrics">
+                            <strong>ROI Impact:</strong> 20% increase in cross-selling success, 18% higher customer lifetime value
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Implementation Content -->
+            <div class="technical-content hidden" id="technical-content">
+                <div class="code-step">
+                    <h5>Step 6: Item-Based Similarity Calculation</h5>
+                    <div class="code-block">
+    <span class="keyword">def</span> <span class="function">calculate_item_similarity</span>(<span class="keyword">self</span>) -> np.ndarray:
+        <span class="string">"""Calculate item-item similarity matrix using cosine similarity"""</span>
+        
+        <span class="comment"># Transpose user-item matrix to item-user matrix</span>
+        item_user_matrix = <span class="keyword">self</span>.user_item_matrix.T
+        
+        <span class="comment"># Calculate cosine similarity between items</span>
+        item_similarity = cosine_similarity(item_user_matrix)
+        
+        <span class="comment"># Convert to DataFrame for easier indexing</span>
+        item_similarity_df = pd.DataFrame(
+            item_similarity,
+            index=item_user_matrix.index,
+            columns=item_user_matrix.index
+        )
+        
+        <span class="keyword">return</span> item_similarity_df
+                    </div>
+                    <div class="code-result">
+Item-item similarity matrix calculated:
+- Shape: (n_items, n_items) symmetric matrix
+- Values range from -1 to 1 (cosine similarity)
+- Diagonal values = 1.0 (item similarity with itself)
+- Used to find products similar to what user already likes
+                    </div>
+                </div>
+
+                <div class="code-step">
+                    <h5>Step 7: User-Based Recommendation Generation</h5>
+                    <div class="code-block">
+    <span class="keyword">def</span> <span class="function">recommend_user_based</span>(<span class="keyword">self</span>, user_id: <span class="keyword">str</span>, top_n: <span class="keyword">int</span> = <span class="number">10</span>, 
+                               min_similarity: <span class="keyword">float</span> = <span class="number">0.1</span>) -> List[Tuple[<span class="keyword">str</span>, <span class="keyword">float</span>]]:
+        <span class="string">"""Generate recommendations using user-based collaborative filtering"""</span>
+        
+        <span class="keyword">if</span> user_id <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">self</span>.user_item_matrix.index:
+            <span class="keyword">return</span> []
+        
+        <span class="comment"># Get similar users above minimum threshold</span>
+        similar_users = <span class="keyword">self</span>.user_similarity[user_id]
+        similar_users = similar_users[similar_users >= min_similarity]
+        similar_users = similar_users.sort_values(ascending=<span class="keyword">False</span>)
+        
+        <span class="comment"># Get user's existing ratings</span>
+        user_ratings = <span class="keyword">self</span>.user_item_matrix.loc[user_id]
+        unrated_items = user_ratings[user_ratings == <span class="number">0</span>].index
+        
+        <span class="comment"># Calculate weighted scores for unrated items</span>
+        recommendations = {}
+        
+        <span class="keyword">for</span> item <span class="keyword">in</span> unrated_items:
+            weighted_sum = <span class="number">0</span>
+            similarity_sum = <span class="number">0</span>
+            
+            <span class="keyword">for</span> similar_user, similarity <span class="keyword">in</span> similar_users.items():
+                <span class="keyword">if</span> <span class="keyword">self</span>.user_item_matrix.loc[similar_user, item] > <span class="number">0</span>:
+                    weighted_sum += (similarity * 
+                                   <span class="keyword">self</span>.user_item_matrix.loc[similar_user, item])
+                    similarity_sum += abs(similarity)
+            
+            <span class="keyword">if</span> similarity_sum > <span class="number">0</span>:
+                recommendations[item] = weighted_sum / similarity_sum
+        
+        <span class="comment"># Sort and return top N recommendations</span>
+        sorted_recs = sorted(recommendations.items(), 
+                           key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)
+        
+        <span class="keyword">return</span> sorted_recs[:top_n]
+                    </div>
+                    <div class="code-result">
+User-based recommendations generated:
+- Finds users with similar rating patterns
+- Recommends items that similar users liked
+- Weights recommendations by user similarity scores
+- Returns ranked list of (item, predicted_rating) tuples
+                    </div>
+                </div>
+
+                <div class="code-step">
+                    <h5>Step 8: Item-Based Recommendation Generation</h5>
+                    <div class="code-block">
+    <span class="keyword">def</span> <span class="function">recommend_item_based</span>(<span class="keyword">self</span>, user_id: <span class="keyword">str</span>, top_n: <span class="keyword">int</span> = <span class="number">10</span>, 
+                               min_similarity: <span class="keyword">float</span> = <span class="number">0.1</span>) -> List[Tuple[<span class="keyword">str</span>, <span class="keyword">float</span>]]:
+        <span class="string">"""Generate recommendations using item-based collaborative filtering"""</span>
+        
+        <span class="keyword">if</span> user_id <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">self</span>.user_item_matrix.index:
+            <span class="keyword">return</span> []
+        
+        <span class="comment"># Get user's ratings and unrated items</span>
+        user_ratings = <span class="keyword">self</span>.user_item_matrix.loc[user_id]
+        rated_items = user_ratings[user_ratings > <span class="number">0</span>]
+        unrated_items = user_ratings[user_ratings == <span class="number">0</span>].index
+        
+        <span class="comment"># Calculate scores for unrated items</span>
+        recommendations = {}
+        
+        <span class="keyword">for</span> item <span class="keyword">in</span> unrated_items:
+            weighted_sum = <span class="number">0</span>
+            similarity_sum = <span class="number">0</span>
+            
+            <span class="keyword">for</span> rated_item, rating <span class="keyword">in</span> rated_items.items():
+                <span class="comment"># Get similarity between items</span>
+                similarity = <span class="keyword">self</span>.item_similarity.loc[item, rated_item]
+                
+                <span class="keyword">if</span> similarity >= min_similarity:
+                    weighted_sum += similarity * rating
+                    similarity_sum += abs(similarity)
+            
+            <span class="keyword">if</span> similarity_sum > <span class="number">0</span>:
+                recommendations[item] = weighted_sum / similarity_sum
+        
+        <span class="comment"># Sort and return top N recommendations</span>
+        sorted_recs = sorted(recommendations.items(), 
+                           key=<span class="keyword">lambda</span> x: x[<span class="number">1</span>], reverse=<span class="keyword">True</span>)
+        
+        <span class="keyword">return</span> sorted_recs[:top_n]
+                    </div>
+                    <div class="code-result">
+Item-based recommendations generated:
+- Finds items similar to what user has already rated
+- Recommends items based on item-item similarity patterns
+- Weights recommendations by item similarity scores
+- More stable than user-based when user preferences are sparse
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="data-example">
+                <h4>Sample Data & Usage Example</h4>
+                <p>Here's how to use the collaborative filtering system with real e-commerce data:</p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">
+                    <span class="code-title">Real-World Usage Example</span>
+                    <span class="code-lang">Python</span>
+                </div>
+                <div class="code-block">
+<span class="comment"># Sample e-commerce user-item rating matrix</span>
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Create sample e-commerce data</span>
+ecommerce_data = {
+    <span class="string">'laptop_dell_xps'</span>:     [<span class="number">5</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>],
+    <span class="string">'mouse_logitech'</span>:      [<span class="number">4</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>],
+    <span class="string">'keyboard_mechanical'</span>: [<span class="number">5</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">4</span>],
+    <span class="string">'monitor_4k'</span>:          [<span class="number">4</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],
+    <span class="string">'tablet_ipad'</span>:         [<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>],
+    <span class="string">'headphones_sony'</span>:     [<span class="number">0</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>],
+    <span class="string">'phone_iphone'</span>:        [<span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>],
+    <span class="string">'laptop_gaming'</span>:       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">5</span>],
+    <span class="string">'webcam_hd'</span>:           [<span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],
+    <span class="string">'smartwatch_apple'</span>:    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, <span class="number">0</span>],
+    <span class="string">'airpods_pro'</span>:         [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>],
+    <span class="string">'mouse_gaming'</span>:        [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>],
+    <span class="string">'monitor_gaming'</span>:      [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>],
+    <span class="string">'headphones_gaming'</span>:   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>]
+}
+
+<span class="comment"># Create DataFrame with proper user indexing</span>
+user_names = [<span class="string">'tech_pro'</span>, <span class="string">'apple_fan'</span>, <span class="string">'gamer'</span>, <span class="string">'mobile_user'</span>, <span class="string">'hardcore_gamer'</span>]
+df_ratings = pd.DataFrame(ecommerce_data, index=user_names)
+
+<span class="comment"># Initialize the recommendation system</span>
+recommender = CollaborativeFilter(df_ratings)
+
+<span class="comment"># Get recommendations for a specific user</span>
+user_id = <span class="string">'tech_pro'</span>
+
+<span class="comment"># User-based recommendations</span>
+user_based_recs = recommender.recommend_user_based(user_id, top_n=<span class="number">5</span>)
+<span class="function">print</span>(<span class="string">f"User-based recommendations for {user_id}:"</span>)
+<span class="function">print</span>(user_based_recs)
+
+<span class="comment"># Item-based recommendations</span>
+item_based_recs = recommender.recommend_item_based(user_id, top_n=<span class="number">5</span>)
+<span class="function">print</span>(<span class="string">f"\nItem-based recommendations for {user_id}:"</span>)
+<span class="function">print</span>(item_based_recs)
+
+<span class="comment"># Predict rating for a specific item</span>
+predicted_rating = recommender.predict_rating(user_id, <span class="string">'tablet_ipad'</span>)
+<span class="function">print</span>(<span class="string">f"\nPredicted rating for tablet_ipad: {predicted_rating:.2f}"</span>)
+
+<span class="comment"># Example output:</span>
+<span class="comment"># User-based recommendations:</span>
+<span class="comment"># [('tablet_ipad', 4.2), ('headphones_sony', 3.8), ('phone_iphone', 3.6)]</span>
+</div>
+            </div>
+
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <h5>E-commerce Product Recommendations</h5>
+                    <p>Recommend products based on similar customer purchase patterns and ratings. Ideal for "Customers who bought this also bought" features.</p>
+                </div>
+                <div class="use-case-card">
+                    <h5>Content Recommendation</h5>
+                    <p>Recommend music, movies, or articles based on user preferences and behavior patterns of similar users.</p>
+                </div>
+                <div class="use-case-card">
+                    <h5>Streaming Services</h5>
+                    <p>Suggest movies or shows based on viewing history and ratings from users with similar tastes.</p>
+                </div>
+                <div class="use-case-card">
+                    <h5>News & Content Personalization</h5>
+                    <p>Personalize news feeds and content recommendations based on reading patterns and engagement data.</p>
+                </div>
+                <div class="use-case-card">
+                    <h5>Travel & Hospitality</h5>
+                    <p>Recommend hotels, restaurants, or destinations based on similar traveler preferences and booking patterns.</p>
+                </div>
+                <div class="use-case-card">
+                    <h5>Business Intelligence</h5>
+                    <p>Suggest business services, software, or partnerships based on company profiles and similar business needs.</p>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Collaborative Filtering Demonstration</h3>
+                <p>Test the recommendation system with sample data</p>
+                <div class="demo-controls">
+                    <select class="demo-select" id="demo-user">
+                        <option value="user_001">Tech Professional</option>
+                        <option value="user_002">Apple Enthusiast</option>
+                        <option value="user_003">Gaming Enthusiast</option>
+                        <option value="user_004">Mobile First User</option>
+                        <option value="user_005">Hardcore Gamer</option>
+                    </select>
+                    <select class="demo-select" id="demo-method">
+                        <option value="user-based">User-Based CF</option>
+                        <option value="item-based">Item-Based CF</option>
+                        <option value="hybrid">Hybrid Approach</option>
+                    </select>
+                    <input type="number" class="demo-input" id="demo-count" placeholder="Number of Recs" value="3" min="1" max="10">
+                    <button class="demo-button" onclick="runCollaborativeFilteringDemo()">Get Recommendations</button>
+                </div>
+                <div class="results-display" id="cf-results">
+                    Select a user and method, then click "Get Recommendations"
+                </div>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Performance Optimization Techniques</h4>
+                <ul>
+                    <li><strong>Sparse Matrix Handling:</strong> Use sparse matrix representations for large datasets</li>
+                    <li><strong>Dimensionality Reduction:</strong> Apply SVD or PCA to reduce computational complexity</li>
+                    <li><strong>Similarity Caching:</strong> Pre-compute and cache similarity matrices</li>
+                    <li><strong>Incremental Updates:</strong> Update similarities incrementally as new data arrives</li>
+                    <li><strong>Cold Start Problem:</strong> Use content-based filtering for new users/items</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Attribution Model Deep Dive -->
+        <div id="attribution" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Attribution Model Deep Dive</h2>
+                <p class="section-subtitle">Multi-touch attribution modeling and conversion tracking with machine learning</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Attribution Modeling Framework</h4>
+                <p><strong>Attribution Models</strong> use machine learning to assign credit to marketing touchpoints along the customer journey. These models help understand the true impact of each marketing channel and optimize budget allocation.</p>
+                
+                <p><strong>Advanced Attribution Approaches:</strong></p>
+                <ul>
+                    <li><strong>Data-Driven Attribution:</strong> Machine learning algorithms determine optimal credit distribution</li>
+                    <li><strong>Markov Chain Models:</strong> Probabilistic models for customer journey analysis</li>
+                    <li><strong>Shapley Value Attribution:</strong> Game theory approach for fair credit assignment</li>
+                    <li><strong>Survival Analysis:</strong> Time-to-conversion modeling with censored data</li>
+                    <li><strong>Multi-Touch Attribution:</strong> Deep learning models for complex journey patterns</li>
+                </ul>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">
+                    <span class="code-title">Attribution Model Implementation</span>
+                    <span class="code-lang">Python</span>
+                </div>
+            <div class="code-step">
+                <h5>Step 1: Import Required Libraries</h5>
+                <div class="code-block">
+<span class="comment"># Advanced Attribution Model with Multiple Approaches</span>
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor
+<span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression
+<span class="keyword">from</span> typing <span class="keyword">import</span> Dict, List, Tuple
+<span class="keyword">import</span> warnings
+warnings.filterwarnings(<span class="string">'ignore'</span>)
+</div>
+                <div class="code-result">
+Successfully imported libraries for attribution modeling:
+- NumPy: Mathematical operations and array handling
+- Pandas: Data manipulation for customer journey analysis
+- Scikit-learn: Machine learning models for data-driven attribution
+- Typing: Type hints for better code documentation
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 2: Initialize Attribution Model Class</h5>
+                <div class="code-block">
+<span class="keyword">class</span> <span class="function">AttributionModel</span>:
+    <span class="keyword">def</span> <span class="function">__init__</span>(<span class="keyword">self</span>, journey_data: pd.DataFrame):
+        <span class="string">"""
+        Initialize Attribution Model with customer journey data
+        
+        Parameters:
+        journey_data: DataFrame with columns ['user_id', 'touchpoint', 'channel', 
+                     'timestamp', 'conversion_value', 'time_to_conversion']
+        """</span>
+        <span class="keyword">self</span>.journey_data = journey_data.copy()
+        <span class="keyword">self</span>.channels = journey_data[<span class="string">'channel'</span>].unique()
+        <span class="keyword">self</span>.prepare_features()
+        
+    <span class="keyword">def</span> <span class="function">prepare_features</span>(<span class="keyword">self</span>):
+        <span class="string">"""Prepare features for attribution modeling"""</span>
+        <span class="comment"># Calculate time decay features</span>
+        <span class="keyword">self</span>.journey_data[<span class="string">'time_decay'</span>] = np.exp(
+            -<span class="keyword">self</span>.journey_data[<span class="string">'time_to_conversion'</span>] / <span class="number">7</span>
+        )
+        
+        <span class="comment"># Calculate position features</span>
+        <span class="keyword">self</span>.journey_data[<span class="string">'position'</span>] = (
+            <span class="keyword">self</span>.journey_data.groupby(<span class="string">'user_id'</span>).cumcount() + <span class="number">1</span>
+        )
+        
+        <span class="comment"># Calculate reverse position (from conversion)</span>
+        <span class="keyword">self</span>.journey_data[<span class="string">'reverse_position'</span>] = (
+            <span class="keyword">self</span>.journey_data.groupby(<span class="string">'user_id'</span>)[<span class="string">'position'</span>].transform(<span class="string">'max'</span>) 
+            - <span class="keyword">self</span>.journey_data[<span class="string">'position'</span>] + <span class="number">1</span>
+        )
+</div>
+                <div class="code-result">
+Attribution Model initialized with:
+- Customer journey data loaded and processed
+- Unique marketing channels identified
+- Feature engineering completed:
+  * Time decay weights calculated (7-day half-life)
+  * Touchpoint positions in customer journey
+  * Reverse positions from conversion point
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 3: First-Touch Attribution Implementation</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">first_touch_attribution</span>(<span class="keyword">self</span>) -> pd.DataFrame:
+        <span class="string">"""Apply first-touch attribution model"""</span>
+        result = <span class="keyword">self</span>.journey_data.copy()
+        result[<span class="string">'attribution_credit'</span>] = <span class="number">0.0</span>
+        
+        <span class="comment"># Give all credit to first touchpoint in each journey</span>
+        first_touches = result.groupby(<span class="string">'user_id'</span>).first()
+        
+        <span class="keyword">for</span> user_id, row <span class="keyword">in</span> first_touches.iterrows():
+            mask = (result[<span class="string">'user_id'</span>] == user_id) & (result[<span class="string">'position'</span>] == <span class="number">1</span>)
+            result.loc[mask, <span class="string">'attribution_credit'</span>] = row[<span class="string">'conversion_value'</span>]
+            
+        <span class="keyword">return</span> result
+</div>
+                <div class="code-result">
+First-Touch Attribution Model:
+- Assigns 100% conversion credit to first marketing touchpoint
+- Useful for measuring awareness and discovery campaigns
+- Simple but may undervalue nurturing touchpoints
+- Example: Social Media Ad gets full $100 credit for conversion
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 4: Last-Touch Attribution Implementation</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">last_touch_attribution</span>(<span class="keyword">self</span>) -> pd.DataFrame:
+        <span class="string">"""Apply last-touch attribution model"""</span>
+        result = <span class="keyword">self</span>.journey_data.copy()
+        result[<span class="string">'attribution_credit'</span>] = <span class="number">0.0</span>
+        
+        <span class="comment"># Give all credit to last touchpoint in each journey</span>
+        last_touches = result.groupby(<span class="string">'user_id'</span>).last()
+        
+        <span class="keyword">for</span> user_id, row <span class="keyword">in</span> last_touches.iterrows():
+            max_position = result[result[<span class="string">'user_id'</span>] == user_id][<span class="string">'position'</span>].max()
+            mask = (result[<span class="string">'user_id'</span>] == user_id) & (result[<span class="string">'position'</span>] == max_position)
+            result.loc[mask, <span class="string">'attribution_credit'</span>] = row[<span class="string">'conversion_value'</span>]
+            
+        <span class="keyword">return</span> result
+</div>
+                <div class="code-result">
+Last-Touch Attribution Model:
+- Assigns 100% conversion credit to final marketing touchpoint
+- Emphasizes closing and conversion-driving activities
+- May undervalue awareness and consideration touchpoints
+- Example: Direct Visit gets full $100 credit, ignoring prior Email campaign
+</div>
+            </div>
+
+            <div class="code-step">
+                <h5>Step 5: Time-Decay Attribution Implementation</h5>
+                <div class="code-block">
+    <span class="keyword">def</span> <span class="function">time_decay_attribution</span>(<span class="keyword">self</span>, half_life: <span class="keyword">int</span> = <span class="number">7</span>) -> pd.DataFrame:
+        <span class="string">"""Apply time-decay attribution model"""</span>
+        result = <span class="keyword">self</span>.journey_data.copy()
+        result[<span class="string">'attribution_credit'</span>] = <span class="number">0.0</span>
+        
+        <span class="keyword">for</span> user_id <span class="keyword">in</span> result[<span class="string">'user_id'</span>].unique():
+            user_data = result[result[<span class="string">'user_id'</span>] == user_id].copy()
+            
+            <span class="comment"># Calculate time decay weights</span>
+            weights = np.exp(-user_data[<span class="string">'time_to_conversion'</span>] / half_life)
+            total_weight = weights.sum()
+            
+            <span class="keyword">if</span> total_weight > <span class="number">0</span>:
+                normalized_weights = weights / total_weight
+                conversion_value = user_data[<span class="string">'conversion_value'</span>].iloc[<span class="number">0</span>]
+                
+                result.loc[
+                    result[<span class="string">'user_id'</span>] == user_id, 
+                    <span class="string">'attribution_credit'</span>
+                ] = normalized_weights * conversion_value
+                
+        <span class="keyword">return</span> result
+</div>
+                <div class="code-result">
+Time-Decay Attribution Model:
+- Credit decreases exponentially as touchpoints get older
+- More recent touchpoints receive higher attribution
+- Half-life parameter controls decay rate (default: 7 days)
+- Example: Email (14 days): $15, Search (7 days): $30, Direct (1 day): $55
+</div>
+            </div>
+
+            <div class="data-example">
+                <h4>Sample Attribution Analysis & Usage Example</h4>
+                <p>Here's how to use the attribution modeling system with real marketing campaign data:</p>
+            </div>
+
+            <div class="code-section">
+                <div class="code-header">
+                    <span class="code-title">Real-World Attribution Analysis Example</span>
+                    <span class="code-lang">Python</span>
+                </div>
+                <div class="code-block">
+<span class="comment"># Sample marketing journey data</span>
+<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+
+<span class="comment"># Create sample customer journey data</span>
+journey_data = pd.DataFrame({
+    <span class="string">'user_id'</span>: [<span class="string">'user_001'</span>, <span class="string">'user_001'</span>, <span class="string">'user_001'</span>, <span class="string">'user_002'</span>, <span class="string">'user_002'</span>, <span class="string">'user_003'</span>],
+    <span class="string">'touchpoint'</span>: [<span class="string">'social_ad'</span>, <span class="string">'email_click'</span>, <span class="string">'direct_visit'</span>, <span class="string">'google_search'</span>, <span class="string">'retargeting_ad'</span>, <span class="string">'affiliate_link'</span>],
+    <span class="string">'channel'</span>: [<span class="string">'Social Media'</span>, <span class="string">'Email'</span>, <span class="string">'Direct'</span>, <span class="string">'Search'</span>, <span class="string">'Display'</span>, <span class="string">'Affiliate'</span>],
+    <span class="string">'timestamp'</span>: pd.to_datetime([<span class="string">'2024-01-01'</span>, <span class="string">'2024-01-05'</span>, <span class="string">'2024-01-10'</span>, <span class="string">'2024-01-03'</span>, <span class="string">'2024-01-08'</span>, <span class="string">'2024-01-15'</span>]),
+    <span class="string">'conversion_value'</span>: [<span class="number">100</span>, <span class="number">100</span>, <span class="number">100</span>, <span class="number">150</span>, <span class="number">150</span>, <span class="number">75</span>],
+    <span class="string">'time_to_conversion'</span>: [<span class="number">9</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>]
+})
+
+<span class="comment"># Initialize the attribution model</span>
+attribution_model = AttributionModel(journey_data)
+
+<span class="comment"># Apply different attribution models</span>
+first_touch_results = attribution_model.first_touch_attribution()
+last_touch_results = attribution_model.last_touch_attribution()
+time_decay_results = attribution_model.time_decay_attribution(half_life=<span class="number">7</span>)
+
+<span class="comment"># Compare attribution results by channel</span>
+channel_comparison = pd.DataFrame({
+    <span class="string">'First_Touch'</span>: first_touch_results.groupby(<span class="string">'channel'</span>)[<span class="string">'attribution_credit'</span>].sum(),
+    <span class="string">'Last_Touch'</span>: last_touch_results.groupby(<span class="string">'channel'</span>)[<span class="string">'attribution_credit'</span>].sum(),
+    <span class="string">'Time_Decay'</span>: time_decay_results.groupby(<span class="string">'channel'</span>)[<span class="string">'attribution_credit'</span>].sum()
+}).fillna(<span class="number">0</span>)
+
+<span class="function">print</span>(<span class="string">"Attribution Credit by Channel:"</span>)
+<span class="function">print</span>(channel_comparison.round(<span class="number">2</span>))
+
+<span class="comment"># Example output:</span>
+<span class="comment">#              First_Touch  Last_Touch  Time_Decay</span>
+<span class="comment"># Affiliate           75.0        75.0      75.00</span>
+<span class="comment"># Direct              100.0       250.0     186.42</span>
+<span class="comment"># Display              0.0       150.0      67.88</span>
+<span class="comment"># Email                0.0         0.0      13.58</span>
+<span class="comment"># Search             150.0         0.0      82.12</span>
+<span class="comment"># Social Media         0.0         0.0       0.00</span>
+</div>
+            </div>
+    
+    <span class="comment">// Calculate TF-IDF weights for features</span>
+    <span class="function">calculateFeatureWeights</span>() {
+        <span class="keyword">const</span> featureDocCount = {};
+        <span class="keyword">const</span> totalDocs = <span class="function">Object.keys</span>(<span class="keyword">this</span>.itemFeatures).length;
+        
+        <span class="comment">// Count documents containing each feature</span>
+        <span class="keyword">for</span> (<span class="keyword">const</span> itemId <span class="keyword">in</span> <span class="keyword">this</span>.itemFeatures) {
+            <span class="keyword">const</span> features = <span class="keyword">this</span>.itemFeatures[itemId];
+            <span class="keyword">for</span> (<span class="keyword">const</span> feature <span class="keyword">in</span> features) {
+                <span class="keyword">if</span> (features[feature] > <span class="number">0</span>) {
+                    featureDocCount[feature] = (featureDocCount[feature] || <span class="number">0</span>) + <span class="number">1</span>;
+                }
+            }
+        }
+        
+        <span class="comment">// Calculate IDF weights</span>
+        <span class="keyword">const</span> weights = {};
+        <span class="keyword">for</span> (<span class="keyword">const</span> feature <span class="keyword">in</span> featureDocCount) {
+            weights[feature] = <span class="function">Math.log</span>(totalDocs / featureDocCount[feature]);
+        }
+        
+        <span class="keyword">return</span> weights;
+    }
+    
+    <span class="comment">// Calculate cosine similarity between user profile and item</span>
+    <span class="function">calculateSimilarity</span>(userProfile, itemFeatures) {
+        <span class="keyword">let</span> dotProduct = <span class="number">0</span>;
+        <span class="keyword">let</span> userNorm = <span class="number">0</span>;
+        <span class="keyword">let</span> itemNorm = <span class="number">0</span>;
+        
+        <span class="keyword">const</span> allFeatures = <span class="keyword">new</span> <span class="function">Set</span>([
+            ...<span class="function">Object.keys</span>(userProfile),
+            ...<span class="function">Object.keys</span>(itemFeatures)
+        ]);
+        
+        <span class="keyword">for</span> (<span class="keyword">const</span> feature <span class="keyword">of</span> allFeatures) {
+            <span class="keyword">const</span> userValue = userProfile[feature] || <span class="number">0</span>;
+            <span class="keyword">const</span> itemValue = itemFeatures[feature] || <span class="number">0</span>;
+            <span class="keyword">const</span> weight = <span class="keyword">this</span>.featureWeights[feature] || <span class="number">1</span>;
+            
+            <span class="keyword">const</span> weightedUserValue = userValue * weight;
+            <span class="keyword">const</span> weightedItemValue = itemValue * weight;
+            
+            dotProduct += weightedUserValue * weightedItemValue;
+            userNorm += weightedUserValue ** <span class="number">2</span>;
+            itemNorm += weightedItemValue ** <span class="number">2</span>;
+        }
+        
+        <span class="keyword">if</span> (userNorm === <span class="number">0</span> || itemNorm === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        
+        <span class="keyword">return</span> dotProduct / (<span class="function">Math.sqrt</span>(userNorm) * <span class="function">Math.sqrt</span>(itemNorm));
+    }
+    
+    <span class="comment">// Get recommendations for a user</span>
+    <span class="function">recommend</span>(userId, topN = <span class="number">10</span>, excludeRated = <span class="keyword">true</span>) {
+        <span class="keyword">const</span> userProfile = <span class="keyword">this</span>.userProfiles[userId];
+        <span class="keyword">if</span> (!userProfile) <span class="keyword">return</span> [];
+        
+        <span class="keyword">const</span> userRatings = <span class="keyword">this</span>.userRatings[userId] || {};
+        <span class="keyword">const</span> recommendations = [];
+        
+        <span class="keyword">for</span> (<span class="keyword">const</span> itemId <span class="keyword">in</span> <span class="keyword">this</span>.itemFeatures) {
+            <span class="comment">// Skip items already rated by user</span>
+            <span class="keyword">if</span> (excludeRated && userRatings[itemId]) <span class="keyword">continue</span>;
+            
+            <span class="keyword">const</span> similarity = <span class="keyword">this</span>.calculateSimilarity(
+                userProfile,
+                <span class="keyword">this</span>.itemFeatures[itemId]
+            );
+            
+            recommendations.push({ item: itemId, score: similarity });
+        }
+        
+        <span class="keyword">return</span> recommendations
+            .sort((a, b) => b.score - a.score)
+            .slice(<span class="number">0</span>, topN);
+    }
+    
+    <span class="comment">// Find similar items to a given item</span>
+    <span class="function">findSimilarItems</span>(itemId, topN = <span class="number">10</span>) {
+        <span class="keyword">const</span> targetItem = <span class="keyword">this</span>.itemFeatures[itemId];
+        <span class="keyword">if</span> (!targetItem) <span class="keyword">return</span> [];
+        
+        <span class="keyword">const</span> similarities = [];
+        
+        <span class="keyword">for</span> (<span class="keyword">const</span> otherItemId <span class="keyword">in</span> <span class="keyword">this</span>.itemFeatures) {
+            <span class="keyword">if</span> (otherItemId === itemId) <span class="keyword">continue</span>;
+            
+            <span class="keyword">const</span> similarity = <span class="keyword">this</span>.calculateItemSimilarity(
+                targetItem,
+                <span class="keyword">this</span>.itemFeatures[otherItemId]
+            );
+            
+            similarities.push({ item: otherItemId, score: similarity });
+        }
+        
+        <span class="keyword">return</span> similarities
+            .sort((a, b) => b.score - a.score)
+            .slice(<span class="number">0</span>, topN);
+    }
+    
+    <span class="comment">// Calculate similarity between two items</span>
+    <span class="function">calculateItemSimilarity</span>(item1Features, item2Features) {
+        <span class="keyword">let</span> dotProduct = <span class="number">0</span>;
+        <span class="keyword">let</span> norm1 = <span class="number">0</span>;
+        <span class="keyword">let</span> norm2 = <span class="number">0</span>;
+        
+        <span class="keyword">const</span> allFeatures = <span class="keyword">new</span> <span class="function">Set</span>([
+            ...<span class="function">Object.keys</span>(item1Features),
+            ...<span class="function">Object.keys</span>(item2Features)
+        ]);
+        
+        <span class="keyword">for</span> (<span class="keyword">const</span> feature <span class="keyword">of</span> allFeatures) {
+            <span class="keyword">const</span> value1 = item1Features[feature] || <span class="number">0</span>;
+            <span class="keyword">const</span> value2 = item2Features[feature] || <span class="number">0</span>;
+            
+            dotProduct += value1 * value2;
+            norm1 += value1 ** <span class="number">2</span>;
+            norm2 += value2 ** <span class="number">2</span>;
+        }
+        
+        <span class="keyword">if</span> (norm1 === <span class="number">0</span> || norm2 === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        
+        <span class="keyword">return</span> dotProduct / (<span class="function">Math.sqrt</span>(norm1) * <span class="function">Math.sqrt</span>(norm2));
+    }
+    
+    <span class="comment">// Explain why an item was recommended</span>
+    <span class="function">explainRecommendation</span>(userId, itemId) {
+        <span class="keyword">const</span> userProfile = <span class="keyword">this</span>.userProfiles[userId];
+        <span class="keyword">const</span> itemFeatures = <span class="keyword">this</span>.itemFeatures[itemId];
+        
+        <span class="keyword">if</span> (!userProfile || !itemFeatures) <span class="keyword">return</span> <span class="keyword">null</span>;
+        
+        <span class="keyword">const</span> explanation = [];
+        
+        <span class="keyword">for</span> (<span class="keyword">const</span> feature <span class="keyword">in</span> itemFeatures) {
+            <span class="keyword">if</span> (userProfile[feature] && itemFeatures[feature] > <span class="number">0</span>) {
+                <span class="keyword">const</span> contribution = userProfile[feature] * itemFeatures[feature];
+                explanation.push({
+                    feature,
+                    userPreference: userProfile[feature],
+                    itemValue: itemFeatures[feature],
+                    contribution
+                });
+            }
+        }
+        
+        <span class="keyword">return</span> explanation.sort((a, b) => b.contribution - a.contribution);
+    }
+}
+</div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Content-Based Filtering Demonstration</h3>
+                <p>Test content-based recommendations with movie data</p>
+                <div class="demo-controls">
+                    <select class="demo-select" id="cb-user">
+                        <option value="action_fan">Action Movie Fan</option>
+                        <option value="drama_lover">Drama Enthusiast</option>
+                        <option value="comedy_buff">Comedy Buff</option>
+                        <option value="sci_fi_geek">Sci-Fi Geek</option>
+                    </select>
+                    <input type="number" class="demo-input" id="cb-count" placeholder="Number of Recs" value="5" min="1" max="10">
+                    <button class="demo-button" onclick="runContentBasedDemo()">Get Recommendations</button>
+                </div>
+                <div class="results-display" id="cb-results">
+                    Select a user profile and click "Get Recommendations"
+                </div>
+            </div>
+        </div>
+
+        <!-- Experiment Design Deep Dive -->
+        <div id="experiments" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Experiment Design Deep Dive</h2>
+                <p class="section-subtitle">A/B testing, multivariate testing, and causal inference for marketing optimization</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Advanced Experimental Design</h4>
+                <p><strong>Experiment Design</strong> in marketing uses statistical methods and machine learning to design, execute, and analyze controlled experiments that measure causal effects of marketing interventions.</p>
+                
+                <p><strong>Key Methodologies:</strong></p>
+                <ul>
+                    <li><strong>A/B Testing:</strong> Randomized controlled trials for comparing treatments</li>
+                    <li><strong>Multi-Armed Bandits:</strong> Adaptive experiments that optimize while learning</li>
+                    <li><strong>Bayesian Optimization:</strong> Efficient exploration of parameter spaces</li>
+                    <li><strong>Causal Inference:</strong> Methods to establish causality from observational data</li>
+                    <li><strong>Sequential Testing:</strong> Early stopping and sample size adaptation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Behavioral Predictive Model Deep Dive -->
+        <div id="behavioral" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Behavioral Predictive Model Deep Dive</h2>
+                <p class="section-subtitle">Machine learning models for customer behavior forecasting and churn prediction</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Behavioral Prediction Framework</h4>
+                <p><strong>Behavioral Predictive Models</strong> use advanced machine learning techniques to forecast customer actions, predict churn, and estimate lifetime value based on historical behavior patterns.</p>
+                
+                <p><strong>Predictive Modeling Approaches:</strong></p>
+                <ul>
+                    <li><strong>Churn Prediction:</strong> Ensemble methods and survival analysis for retention</li>
+                    <li><strong>CLV Modeling:</strong> Probabilistic models like BG/NBD and Pareto/NBD</li>
+                    <li><strong>Next Best Action:</strong> Reinforcement learning for recommendation optimization</li>
+                    <li><strong>Propensity Scoring:</strong> Logistic regression and gradient boosting models</li>
+                    <li><strong>Time Series Forecasting:</strong> LSTM and Prophet for behavioral trends</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Segmentation Deep Dive -->
+        <div id="segmentation" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Segmentation Deep Dive</h2>
+                <p class="section-subtitle">Advanced customer segmentation and clustering techniques with ML algorithms</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Advanced Segmentation Methods</h4>
+                <p><strong>ML-Driven Segmentation</strong> goes beyond traditional RFM analysis to discover complex customer patterns using unsupervised learning, deep learning, and advanced clustering algorithms.</p>
+                
+                <p><strong>Modern Segmentation Techniques:</strong></p>
+                <ul>
+                    <li><strong>K-Means Clustering:</strong> Scalable clustering with optimal cluster selection</li>
+                    <li><strong>Hierarchical Clustering:</strong> Dendrograms and agglomerative methods</li>
+                    <li><strong>DBSCAN:</strong> Density-based clustering for irregular shapes</li>
+                    <li><strong>Gaussian Mixture Models:</strong> Probabilistic clustering with soft assignments</li>
+                    <li><strong>Deep Embedding:</strong> Autoencoders for high-dimensional customer representation</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Marketing Data Science Deep Dive -->
+        <div id="data-science" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Marketing Data Science Deep Dive</h2>
+                <p class="section-subtitle">Statistical modeling and data-driven marketing strategies with advanced analytics</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Marketing Data Science Framework</h4>
+                <p><strong>Marketing Data Science</strong> combines statistical modeling, machine learning, and domain expertise to solve complex marketing problems and drive data-driven decision making.</p>
+                
+                <p><strong>Core Data Science Applications:</strong></p>
+                <ul>
+                    <li><strong>Marketing Mix Modeling:</strong> Econometric models for media effectiveness</li>
+                    <li><strong>Price Optimization:</strong> Dynamic pricing using demand forecasting</li>
+                    <li><strong>Uplift Modeling:</strong> Incremental impact measurement and targeting</li>
+                    <li><strong>Feature Engineering:</strong> Advanced feature creation for ML models</li>
+                    <li><strong>Model Deployment:</strong> MLOps for production marketing systems</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Customer Relationship Management Deep Dive -->
+        <div id="crm" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Customer Relationship Management Deep Dive</h2>
+                <p class="section-subtitle">Lifecycle management and customer journey optimization using data science</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Data-Driven CRM Framework</h4>
+                <p><strong>Modern CRM</strong> leverages machine learning and advanced analytics to optimize customer relationships, predict customer needs, and automate personalized interactions across the entire customer lifecycle.</p>
+                
+                <p><strong>CRM Analytics Applications:</strong></p>
+                <ul>
+                    <li><strong>Customer Health Scoring:</strong> Predictive models for relationship quality</li>
+                    <li><strong>Journey Optimization:</strong> Markov chains and process mining</li>
+                    <li><strong>Retention Modeling:</strong> Survival analysis and hazard modeling</li>
+                    <li><strong>Cross-sell/Upsell:</strong> Association rules and collaborative filtering</li>
+                    <li><strong>Sentiment Analysis:</strong> NLP for customer feedback processing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Performance Measurement Deep Dive -->
+        <div id="measurement" class="deep-dive-section">
+            <div class="section-header">
+                <h2 class="section-title">Performance Measurement Deep Dive</h2>
+                <p class="section-subtitle">KPIs, metrics, and marketing ROI measurement with advanced analytics</p>
+            </div>
+
+            <div class="algorithm-explanation">
+                <h4>Advanced Performance Analytics</h4>
+                <p><strong>Performance Measurement</strong> uses statistical methods, machine learning, and advanced analytics to measure marketing effectiveness, optimize ROI, and provide actionable insights for strategic decision making.</p>
+                
+                <p><strong>Advanced Measurement Techniques:</strong></p>
+                <ul>
+                    <li><strong>Marketing Mix Modeling:</strong> Econometric analysis of channel effectiveness</li>
+                    <li><strong>Incrementality Testing:</strong> Causal impact measurement with synthetic controls</li>
+                    <li><strong>Multi-Touch Attribution:</strong> Machine learning attribution models</li>
+                    <li><strong>Real-Time Analytics:</strong> Streaming data processing and alerting</li>
+                    <li><strong>Predictive KPIs:</strong> Leading indicators using time series forecasting</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="nav-arrow" id="prevBtn" onclick="navigateSection(-1)" disabled>← Previous</button>
+            <div style="text-align: center; color: #94a3b8;">
+                <span id="currentSection">1</span> of 8
+            </div>
+            <button class="nav-arrow" id="nextBtn" onclick="navigateSection(1)">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSectionIndex = 0;
+        const sections = ['personalization', 'attribution', 'experiments', 'behavioral', 'segmentation', 'data-science', 'crm', 'measurement'];
+        
+        // Sample data for demos
+        const sampleEcommerceData = {
+            "user_001": {
+                "laptop_dell_xps": 5,
+                "mouse_logitech": 4,
+                "keyboard_mechanical": 5,
+                "monitor_4k": 4,
+                "webcam_hd": 3
+            },
+            "user_002": {
+                "laptop_dell_xps": 4,
+                "tablet_ipad": 5,
+                "headphones_sony": 4,
+                "monitor_4k": 3,
+                "phone_iphone": 5
+            },
+            "user_003": {
+                "keyboard_mechanical": 5,
+                "mouse_logitech": 5,
+                "laptop_gaming": 4,
+                "headphones_sony": 3,
+                "webcam_hd": 2
+            },
+            "user_004": {
+                "tablet_ipad": 4,
+                "phone_iphone": 5,
+                "laptop_dell_xps": 3,
+                "smartwatch_apple": 4,
+                "airpods_pro": 5
+            },
+            "user_005": {
+                "laptop_gaming": 5,
+                "keyboard_mechanical": 4,
+                "mouse_gaming": 5,
+                "monitor_gaming": 4,
+                "headphones_gaming": 4
+            }
+        };
+        
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.deep-dive-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav cards
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to selected nav card
+            event.target.closest('.nav-card').classList.add('active');
+            
+            // Update navigation
+            currentSectionIndex = sections.indexOf(sectionId);
+            updateNavigation();
+        }
+        
+        function navigateSection(direction) {
+            const newIndex = currentSectionIndex + direction;
+            if (newIndex >= 0 && newIndex < sections.length) {
+                currentSectionIndex = newIndex;
+                showSectionByIndex(currentSectionIndex);
+                updateNavigation();
+            }
+        }
+        
+        function showSectionByIndex(index) {
+            const sectionId = sections[index];
+            
+            document.querySelectorAll('.deep-dive-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.nav-card')[index].classList.add('active');
+        }
+        
+        function updateNavigation() {
+            document.getElementById('prevBtn').disabled = currentSectionIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSectionIndex === sections.length - 1;
+            document.getElementById('currentSection').textContent = currentSectionIndex + 1;
+        }
+        
+        // Collaborative Filtering Demo
+        function runCollaborativeFilteringDemo() {
+            const userId = document.getElementById('demo-user').value;
+            const method = document.getElementById('demo-method').value;
+            const count = parseInt(document.getElementById('demo-count').value);
+            
+            // Initialize recommender with sample data
+            const recommender = new CollaborativeFilter(sampleEcommerceData);
+            
+            let recommendations = [];
+            let methodName = '';
+            
+            try {
+                switch(method) {
+                    case 'user-based':
+                        recommendations = recommender.recommendUserBased(userId, count);
+                        methodName = 'User-Based Collaborative Filtering';
+                        break;
+                    case 'item-based':
+                        recommendations = recommender.recommendItemBased(userId, count);
+                        methodName = 'Item-Based Collaborative Filtering';
+                        break;
+                    case 'hybrid':
+                        recommendations = recommender.recommendHybrid(userId, count);
+                        methodName = 'Hybrid Collaborative Filtering';
+                        break;
+                }
+                
+                let resultHTML = `
+                    <div style="text-align: center;">
+                        <h4>${methodName} Results</h4>
+                        <p style="margin: 10px 0; color: #94a3b8;">User: ${userId} | Method: ${methodName}</p>
+                        <div style="margin-top: 15px;">
+                `;
+                
+                if (recommendations.length > 0) {
+                    recommendations.forEach((rec, index) => {
+                        const productName = rec.item.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                        resultHTML += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+                                <span>${index + 1}. ${productName}</span>
+                                <span style="color: #3b82f6; font-weight: bold;">${rec.score.toFixed(3)}</span>
+                            </div>
+                        `;
+                    });
+                } else {
+                    resultHTML += '<p style="color: #f59e0b;">No recommendations found. User may need more rating data.</p>';
+                }
+                
+                resultHTML += `</div></div>`;
+                
+                document.getElementById('cf-results').innerHTML = resultHTML;
+                
+            } catch (error) {
+                document.getElementById('cf-results').innerHTML = `
+                    <div style="color: #ef4444; text-align: center;">
+                        <h4>Error</h4>
+                        <p>Failed to generate recommendations: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Content-Based Filtering Demo
+        function runContentBasedDemo() {
+            const userId = document.getElementById('cb-user').value;
+            const count = parseInt(document.getElementById('cb-count').value);
+            
+            // Sample movie data with features
+            const movieFeatures = {
+                "action_movie_1": { action: 0.9, drama: 0.2, comedy: 0.1, sci_fi: 0.3 },
+                "drama_movie_1": { action: 0.1, drama: 0.9, comedy: 0.2, romance: 0.7 },
+                "comedy_movie_1": { action: 0.3, drama: 0.2, comedy: 0.9, romance: 0.4 },
+                "sci_fi_movie_1": { action: 0.6, drama: 0.3, sci_fi: 0.9, thriller: 0.5 },
+                "romance_movie_1": { drama: 0.6, comedy: 0.4, romance: 0.9, family: 0.3 }
+            };
+            
+            const userProfiles = {
+                "action_fan": { action: 0.9, drama: 0.3, thriller: 0.7, sci_fi: 0.5 },
+                "drama_lover": { drama: 0.9, romance: 0.6, family: 0.4, comedy: 0.3 },
+                "comedy_buff": { comedy: 0.9, romance: 0.5, family: 0.6, action: 0.2 },
+                "sci_fi_geek": { sci_fi: 0.9, action: 0.7, thriller: 0.8, drama: 0.4 }
+            };
+            
+            const userProfile = userProfiles[userId];
+            const recommendations = [];
+            
+            for (const movieId in movieFeatures) {
+                const movieFeats = movieFeatures[movieId];
+                let similarity = 0;
+                let userNorm = 0;
+                let movieNorm = 0;
+                
+                for (const feature in userProfile) {
+                    const userValue = userProfile[feature] || 0;
+                    const movieValue = movieFeats[feature] || 0;
+                    
+                    similarity += userValue * movieValue;
+                    userNorm += userValue ** 2;
+                    movieNorm += movieValue ** 2;
+                }
+                
+                if (userNorm > 0 && movieNorm > 0) {
+                    similarity = similarity / (Math.sqrt(userNorm) * Math.sqrt(movieNorm));
+                    recommendations.push({ item: movieId, score: similarity });
+                }
+            }
+            
+            recommendations.sort((a, b) => b.score - a.score);
+            const topRecs = recommendations.slice(0, count);
+            
+            let resultHTML = `
+                <div style="text-align: center;">
+                    <h4>Content-Based Recommendations</h4>
+                    <p style="margin: 10px 0; color: #94a3b8;">User Profile: ${userId.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+                    <div style="margin-top: 15px;">
+            `;
+            
+            topRecs.forEach((rec, index) => {
+                const movieName = rec.item.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                resultHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin: 8px 0; padding: 8px; background: rgba(59, 130, 246, 0.1); border-radius: 6px;">
+                        <span>${index + 1}. ${movieName}</span>
+                        <span style="color: #3b82f6; font-weight: bold;">${rec.score.toFixed(3)}</span>
+                    </div>
+                `;
+            });
+            
+            resultHTML += `</div></div>`;
+            document.getElementById('cb-results').innerHTML = resultHTML;
+        }
+        
+        // Toggle between business usage and technical implementation
+        function toggleContent() {
+            const toggle = document.getElementById('content-toggle');
+            const businessContent = document.getElementById('business-content');
+            const technicalContent = document.getElementById('technical-content');
+            const businessLabel = document.getElementById('business-label');
+            const technicalLabel = document.getElementById('technical-label');
+            
+            if (toggle.checked) {
+                // Show technical implementation
+                businessContent.classList.add('hidden');
+                technicalContent.classList.remove('hidden');
+                businessLabel.classList.remove('active');
+                technicalLabel.classList.add('active');
+            } else {
+                // Show business usage
+                businessContent.classList.remove('hidden');
+                technicalContent.classList.add('hidden');
+                businessLabel.classList.add('active');
+                technicalLabel.classList.remove('active');
+            }
+        }
+
+        // Initialize page
+        updateNavigation();
+    </script>
+</body>
+</html>
