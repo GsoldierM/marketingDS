@@ -54,8 +54,8 @@ A comprehensive interactive guide to machine learning applications in marketing,
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/GsoldierM/marketing_bible.git
-   cd marketing_bible
+   git clone https://github.com/GsoldierM/marketingDS.git
+   cd marketingDS
    ```
 
 2. **Open the ML Marketing Bible**
@@ -128,7 +128,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🤝 Connect
 
-- **Repository**: https://github.com/GsoldierM/marketing_bible
+- **Repository**: https://github.com/GsoldierM/marketingDS
 - **Issues**: Report bugs or request features via GitHub Issues
 
 ---
