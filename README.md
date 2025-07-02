@@ -134,3 +134,5 @@ This project is open source and available under the [MIT License](LICENSE).
 ---
 
 *Building the future of data-driven marketing, one algorithm at a time.*
+
+**Last Updated**: July 2025
