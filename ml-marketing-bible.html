@@ -607,7 +607,198 @@
             color: #8b5cf6;
         }
 
+        /* Neural Network Visualization Styles */
+        .neural-network-container {
+            position: relative;
+            height: 600px;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, rgba(16, 16, 16, 0.9) 70%);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            margin: 40px 0;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .neural-network-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .neural-node {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .neural-node::before {
+            content: '';
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+            animation: pulse 3s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .neural-node:hover {
+            transform: scale(1.15);
+            box-shadow: 0 12px 48px rgba(59, 130, 246, 0.6);
+        }
+
+        .neural-node.active {
+            background: linear-gradient(135deg, #f59e0b, #ef4444);
+            box-shadow: 0 12px 48px rgba(245, 158, 11, 0.6);
+            transform: scale(1.1);
+        }
+
+        .neural-node-content {
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.75em;
+            line-height: 1.2;
+            padding: 8px;
+        }
+
+        .neural-node-number {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #fbbf24;
+        }
+
+        .neural-connection {
+            stroke: #3b82f6;
+            stroke-width: 2;
+            fill: none;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.8));
+        }
+
+        .neural-connection.active {
+            stroke: #f59e0b;
+            stroke-width: 4;
+            opacity: 1;
+            animation: pulse-line 2s ease-in-out infinite;
+        }
+
+        .neural-particle {
+            fill: #fbbf24;
+            opacity: 0;
+        }
+
+        .neural-particle.animate {
+            animation: particle-flow 3s linear infinite;
+        }
+
+        .network-title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e8eaed;
+            font-size: 1.5em;
+            font-weight: 600;
+            z-index: 4;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .network-legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(16, 16, 16, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            z-index: 4;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #e8eaed;
+            font-size: 0.85em;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+
+        @keyframes pulse-line {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes particle-flow {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .neural-node:nth-child(odd) {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .neural-node:nth-child(even) {
+            animation: float 4s ease-in-out infinite reverse;
+        }
+
         @media (max-width: 768px) {
+            .neural-network-container {
+                height: 500px;
+            }
+            
+            .neural-node {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .neural-node::before {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .neural-node-content {
+                font-size: 0.6em;
+                padding: 4px;
+            }
+            
+            .network-legend {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px;
+            }
             .container { padding: 15px; }
             .header h1 { font-size: 2.5em; }
             .navigation { grid-template-columns: 1fr; }
@@ -621,6 +812,89 @@
         <div class="header">
             <h1>ML Marketing Bible</h1>
             <p class="subtitle">Advanced Machine Learning & Data Science for Marketing</p>
+        </div>
+
+        <!-- Neural Network Visualization -->
+        <div class="neural-network-container" id="neural-network">
+            <div class="network-title">ML Marketing Intelligence Network</div>
+            
+            <!-- SVG for connections -->
+            <svg class="neural-network-svg" id="network-svg">
+                <!-- Connections will be dynamically generated -->
+            </svg>
+            
+            <!-- Neural Nodes -->
+            <div class="neural-node active" id="node-1" style="top: 20%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(1, 'personalization')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">1</div>
+                    <div>Personalization</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-2" style="top: 35%; left: 20%; transform: translate(-50%, -50%);" onclick="activateNode(2, 'attribution')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">2</div>
+                    <div>Attribution</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-3" style="top: 35%; left: 80%; transform: translate(-50%, -50%);" onclick="activateNode(3, 'experiments')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">3</div>
+                    <div>Experiments</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-4" style="top: 55%; left: 15%; transform: translate(-50%, -50%);" onclick="activateNode(4, 'behavioral')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">4</div>
+                    <div>Behavioral</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-5" style="top: 55%; left: 85%; transform: translate(-50%, -50%);" onclick="activateNode(5, 'segmentation')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">5</div>
+                    <div>Segmentation</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-6" style="top: 75%; left: 25%; transform: translate(-50%, -50%);" onclick="activateNode(6, 'data-science')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">6</div>
+                    <div>Data Science</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-7" style="top: 75%; left: 75%; transform: translate(-50%, -50%);" onclick="activateNode(7, 'crm')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">7</div>
+                    <div>CRM</div>
+                </div>
+            </div>
+            
+            <div class="neural-node" id="node-8" style="top: 90%; left: 50%; transform: translate(-50%, -50%);" onclick="activateNode(8, 'measurement')">
+                <div class="neural-node-content">
+                    <div class="neural-node-number">8</div>
+                    <div>Performance</div>
+                </div>
+            </div>
+            
+            <!-- Legend -->
+            <div class="network-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);"></div>
+                    <span>Available Section</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"></div>
+                    <span>Active Section</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #3b82f6;"></div>
+                    <span>Neural Connection</span>
+                </div>
+            </div>
         </div>
 
         <div class="navigation">
@@ -1950,6 +2224,145 @@ channel_comparison = pd.DataFrame({
             document.getElementById('cb-results').innerHTML = resultHTML;
         }
         
+        // Neural Network Functions
+        let currentActiveNode = 1;
+        
+        function initializeNeuralNetwork() {
+            createConnections();
+            animateConnections();
+        }
+        
+        function createConnections() {
+            const svg = document.getElementById('network-svg');
+            const container = document.getElementById('neural-network');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Define connection patterns (which nodes connect to which)
+            const connections = [
+                [1, 2], [1, 3], [1, 4], [1, 5], // Center node connects to layer 2
+                [2, 4], [2, 6], [3, 5], [3, 7], // Layer 2 to layer 3
+                [4, 6], [4, 8], [5, 7], [5, 8], // Layer 3 to layer 4
+                [6, 8], [7, 8] // Layer 4 to output
+            ];
+            
+            connections.forEach(([from, to]) => {
+                const fromNode = document.getElementById(`node-${from}`);
+                const toNode = document.getElementById(`node-${to}`);
+                
+                if (fromNode && toNode) {
+                    const fromRect = fromNode.getBoundingClientRect();
+                    const toRect = toNode.getBoundingClientRect();
+                    
+                    const fromX = fromRect.left + fromRect.width / 2 - containerRect.left;
+                    const fromY = fromRect.top + fromRect.height / 2 - containerRect.top;
+                    const toX = toRect.left + toRect.width / 2 - containerRect.left;
+                    const toY = toRect.top + toRect.height / 2 - containerRect.top;
+                    
+                    // Create curved connection
+                    const midX = (fromX + toX) / 2;
+                    const midY = (fromY + toY) / 2;
+                    const curvature = 0.3;
+                    const curve1X = fromX + (midX - fromX) * curvature;
+                    const curve1Y = fromY;
+                    const curve2X = toX - (toX - midX) * curvature;
+                    const curve2Y = toY;
+                    
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', `M ${fromX} ${fromY} Q ${curve1X} ${curve1Y} ${midX} ${midY} Q ${curve2X} ${curve2Y} ${toX} ${toY}`);
+                    path.classList.add('neural-connection');
+                    path.setAttribute('data-from', from);
+                    path.setAttribute('data-to', to);
+                    
+                    svg.appendChild(path);
+                    
+                    // Add particles for animation
+                    createParticles(path, from, to);
+                }
+            });
+        }
+        
+        function createParticles(path, from, to) {
+            const svg = document.getElementById('network-svg');
+            
+            for (let i = 0; i < 3; i++) {
+                const particle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                particle.setAttribute('r', '3');
+                particle.classList.add('neural-particle');
+                particle.setAttribute('data-from', from);
+                particle.setAttribute('data-to', to);
+                
+                // Animate particle along path
+                const animateMotion = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+                animateMotion.setAttribute('dur', '3s');
+                animateMotion.setAttribute('repeatCount', 'indefinite');
+                animateMotion.setAttribute('begin', `${i * 1}s`);
+                
+                const mpath = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
+                mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#path-${from}-${to}`);
+                
+                animateMotion.appendChild(mpath);
+                particle.appendChild(animateMotion);
+                svg.appendChild(particle);
+            }
+        }
+        
+        function activateNode(nodeNumber, sectionId) {
+            // Update neural network visual state
+            document.querySelectorAll('.neural-node').forEach(node => {
+                node.classList.remove('active');
+            });
+            
+            document.getElementById(`node-${nodeNumber}`).classList.add('active');
+            
+            // Activate connections from this node
+            document.querySelectorAll('.neural-connection').forEach(connection => {
+                connection.classList.remove('active');
+                const from = connection.getAttribute('data-from');
+                const to = connection.getAttribute('data-to');
+                
+                if (from == nodeNumber || to == nodeNumber) {
+                    connection.classList.add('active');
+                }
+            });
+            
+            // Activate particles
+            document.querySelectorAll('.neural-particle').forEach(particle => {
+                particle.classList.remove('animate');
+                const from = particle.getAttribute('data-from');
+                const to = particle.getAttribute('data-to');
+                
+                if (from == nodeNumber || to == nodeNumber) {
+                    particle.classList.add('animate');
+                }
+            });
+            
+            currentActiveNode = nodeNumber;
+            
+            // Show corresponding section
+            if (sectionId) {
+                showSection(sectionId);
+            }
+        }
+        
+        function animateConnections() {
+            // Continuous subtle animation for all connections
+            setInterval(() => {
+                document.querySelectorAll('.neural-connection:not(.active)').forEach(connection => {
+                    connection.style.opacity = 0.3 + Math.random() * 0.3;
+                });
+            }, 2000);
+        }
+        
+        // Auto-cycle through nodes for demo effect
+        function startNeuralNetworkDemo() {
+            let nodeIndex = 1;
+            setInterval(() => {
+                nodeIndex = (nodeIndex % 8) + 1;
+                const sections = ['personalization', 'attribution', 'experiments', 'behavioral', 'segmentation', 'data-science', 'crm', 'measurement'];
+                activateNode(nodeIndex, sections[nodeIndex - 1]);
+            }, 8000); // Change every 8 seconds
+        }
+
         // Toggle between business usage and technical implementation
         function toggleContent() {
             const toggle = document.getElementById('content-toggle');
@@ -1975,6 +2388,12 @@ channel_comparison = pd.DataFrame({
 
         // Initialize page
         updateNavigation();
+        
+        // Initialize neural network after page load
+        setTimeout(() => {
+            initializeNeuralNetwork();
+            startNeuralNetworkDemo();
+        }, 1000);
     </script>
 </body>
 </html>
