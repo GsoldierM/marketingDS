@@ -612,11 +612,11 @@
             position: relative;
             height: 700px;
             background: 
-                radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(72, 61, 139, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 70%, rgba(25, 25, 112, 0.5) 0%, transparent 50%),
-                radial-gradient(ellipse at 90% 80%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
-                linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f1419 100%);
+                linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+                url('/Users/ZG287382/Desktop/Cosmic_Shear_2880x1620_Lede.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             border: 2px solid rgba(59, 130, 246, 0.3);
             border-radius: 20px;
             margin: 40px 0;
@@ -867,20 +867,17 @@
             50% { box-shadow: 0 12px 48px rgba(59, 130, 246, 0.6), 0 0 30px rgba(255, 255, 255, 0.2); }
         }
 
-        @keyframes planet-orbit {
-            0% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-8px) rotate(90deg); }
-            50% { transform: translateY(0px) rotate(180deg); }
-            75% { transform: translateY(8px) rotate(270deg); }
-            100% { transform: translateY(0px) rotate(360deg); }
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
         .neural-node:nth-child(odd) {
-            animation: planet-orbit 8s ease-in-out infinite;
+            animation: gentle-float 4s ease-in-out infinite;
         }
 
         .neural-node:nth-child(even) {
-            animation: planet-orbit 8s ease-in-out infinite reverse;
+            animation: gentle-float 4s ease-in-out infinite reverse;
         }
 
         .center-node {
@@ -896,7 +893,7 @@
             width: 140px !important;
             height: 140px !important;
             z-index: 5 !important;
-            animation: cosmic-glow 3s ease-in-out infinite alternate, planet-orbit 12s linear infinite !important;
+            animation: cosmic-glow 3s ease-in-out infinite alternate, gentle-float 5s ease-in-out infinite !important;
         }
 
         .center-node::before {
